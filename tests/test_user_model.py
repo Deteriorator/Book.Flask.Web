@@ -14,8 +14,8 @@ __author__ = 'Liangz'
 
 
 import unittest
-from app import create_app, db
-from app.models import User
+from apps import create_app, db
+from apps.models import User
 
 
 class UserModelTestCase(unittest.TestCase):

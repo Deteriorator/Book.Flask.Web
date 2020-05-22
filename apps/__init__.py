@@ -10,7 +10,6 @@
                    2020/5/21:
 -------------------------------------------------
 """
-__author__ = 'Liangz'
 
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
@@ -19,6 +18,7 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from flask_script import Manager
+from apps.main.forms import NameForm
 
 # bootstrap = Bootstrap()
 # mail = Mail()
@@ -26,37 +26,36 @@ from flask_script import Manager
 # db = SQLAlchemy()
 
 app = Flask(__name__)
-
+app.config["SECRET_KEY"] = "hard to guess string"
 manager = Manager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 mail = Mail(app)
 
-
 # def create_app(config_name):
-#     app = Flask(__name__)
-#     app.config.from_object(config[config_name])
-#     config[config_name].init_app(app)
+#     apps = Flask(__name__)
+#     apps.config.from_object(config[config_name])
+#     config[config_name].init_app(apps)
 #
-#     bootstrap.init_app(app)
-#     mail.init_app(app)
-#     moment.init_app(app)
-#     db.init_app(app)
+#     bootstrap.init_app(apps)
+#     mail.init_app(apps)
+#     moment.init_app(apps)
+#     db.init_app(apps)
 #
 #     # from .main import main as main_blueprint
-#     # app.register_blueprint(main_blueprint)
+#     # apps.register_blueprint(main_blueprint)
 #     from .main import views
-#     app.re
+#     apps.re
 #
-#     return app
+#     return apps
 
-# @app.app_errorhandler(404)
+# @apps.app_errorhandler(404)
 # def page_not_found(e):
 #     return render_template('404.html'), 404
 
 #
-# @app.app_errorhandler(500)
+# @apps.app_errorhandler(500)
 # def internal_server_error(e):
 #     return render_template('500.html'), 500
 
@@ -65,9 +64,19 @@ from datetime import datetime
 
 
 # @main.route('/')
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', current_time=datetime.utcnow())
+    name = None
+    form = NameForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        form.name.data = ''
+    return render_template(
+        'index.html',
+        form=form,
+        name=name,
+        current_time=datetime.utcnow()
+    )
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{#{% import "bootstrap/wtf.html" as wtf %}#}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}Flask{% endblock %}
 
@@ -20,7 +20,6 @@
 {#{% endblock %}#}
 
 {% block navbar %}
-
     <div class="navbar navbar-inverse" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -44,28 +43,26 @@
     </div>
 {% endblock %}
 
-{% block content %}
-
-    <div class="container">
-        {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert">&times;
-                </button>
-                {{ messsage }}
-            </div>
-        {% endfor %}
+{% block page_content %}
+{#    <div class="container">#}
+{#        {% for message in get_flashed_messages() %}#}
+{#            <div class="alert alert-warning">#}
+{#                <button type="button" class="close" data-dismiss="alert">&times;#}
+{#                </button>#}
+{#                {{ messsage }}#}
+{#            </div>#}
+{#        {% endfor %}#}
         <div class="page-header">
             <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
-            {% if not known %}
-                <p>Pleased to meet you!</p>
-            {% else %}
-                <p>Happy to see you again!</p>
-            {% endif %}
+{#            {% if not known %}#}
+{#                <p>Pleased to meet you!</p>#}
+{#            {% else %}#}
+{#                <p>Happy to see you again!</p>#}
+{#            {% endif %}#}
         </div>
-{#        {{ wtf.quick_form(form) }}#}
-    <br/>
+        {{ wtf.quick_form(form) }}
+
         <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
         <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
-    </div>
-
+{#    </div>#}
 {% endblock %}

@@ -15,7 +15,7 @@ __author__ = 'Liangz'
 
 import unittest
 from flask import current_app
-from app import create_app, db
+from apps import create_app, db
 
 
 class BasicsTestCase(unittest.TestCase):
