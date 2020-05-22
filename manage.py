@@ -10,26 +10,29 @@
                    2018/11/8:
 -------------------------------------------------
 """
-__author__ = 'Liangz'
-
-
 import os
 # from apps import create_app, db
-from apps import app #, db
+from apps import app, db
 # from apps.models import User, Role
+from apps import User, Role
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
 
 # apps = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
-migrate = Migrate(app) #, db)
+migrate = Migrate(app, db)
 app.config['DEBUG'] = True
 
+
 def make_shell_context():
-    return dict(app=app) #, db=db, User=User, Role=Role)
-    manager.add_command("shell", Shell(make_context=make_shell_context))
-    manager.add_command('db', MigrateCommand)
+    return dict(app=app, db=db, User=User, Role=Role)
+
+
+# register command "python manage.py shell"
+manager.add_command("shell", Shell(make_context=make_shell_context))
+# register command "Python manage.py db ..."
+manager.add_command('db', MigrateCommand)
 
 
 @manager.command

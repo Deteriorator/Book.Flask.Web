@@ -20,6 +20,7 @@ from config import config
 from flask_script import Manager
 from apps.main.forms import NameForm
 import os
+from flask_script import Shell
 
 # bootstrap = Bootstrap()
 # mail = Mail()
@@ -111,6 +112,10 @@ def index():
         known=session.get('known', False),
         current_time=datetime.utcnow()
     )
+
+
+def make_shell_context():
+    return dict(app=app, db=db, User=User, Role=Role)
 
 
 if __name__ == '__main__':
