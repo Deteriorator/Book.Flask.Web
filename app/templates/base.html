@@ -22,12 +22,12 @@
 {#    });#}
 {#</script>#}
 
-{% block scripts %}
-{{ super() }}
-{{ moment.include_moment() }}
-    <script src="{{ url_for('static/js', filename='moment.min.2.3.1.js') }}"></script>
-    <script src="{{ url_for('static/js', filename='utils.js') }}"></script>
-{% endblock %}
+{#{% block scripts %}#}
+{#{{ super() }}#}
+{#{{ moment.include_moment() }}#}
+{#    <script src="{{ url_for('static/js', filename='moment.min.2.3.1.js') }}"></script>#}
+{#    <script src="{{ url_for('static/js', filename='utils.js') }}"></script>#}
+{#{% endblock %}#}
 
 {% block head %}
     {{ super() }}
