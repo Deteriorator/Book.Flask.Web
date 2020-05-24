@@ -2,6 +2,7 @@
 .idea/
 data.sqlite
 data-test.sqlite
+*.sqlite-journal
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
