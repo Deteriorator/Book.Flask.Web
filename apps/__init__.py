@@ -22,6 +22,7 @@ from apps.main.forms import NameForm
 import os
 from flask_script import Shell
 from flask_mail import Message
+from threading import Thread
 
 # bootstrap = Bootstrap()
 # mail = Mail()
@@ -146,7 +147,14 @@ def send_email(to, subject, template, **kwargs):
     )
     msg.body = render_template(template + '.txt', **kwargs)
     msg.html = render_template(template + '.html', **kwargs)
-    mail.send(msg)
+    thr = Thread(target=send_async_email, args=[app, msg])
+    thr.start()
+    return thr
+
+
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
 
 
 if __name__ == '__main__':
