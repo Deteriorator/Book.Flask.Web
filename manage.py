@@ -12,7 +12,7 @@
 """
 import os
 from apps import create_app, db
-from apps.models import User, Role
+from apps.models import User, Role, Permission
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
@@ -24,7 +24,7 @@ app.config['DEBUG'] = True
 
 
 def make_shell_context():
-    return dict(app=app, db=db, User=User, Role=Role)
+    return dict(app=app, db=db, User=User, Role=Role, Permission=Permission)
 
 
 # register command "python manage.py shell"
