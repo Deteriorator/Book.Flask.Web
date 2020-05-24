@@ -11,15 +11,13 @@
 -------------------------------------------------
 """
 import os
-# from apps import create_app, db
-from apps import app, db
-# from apps.models import User, Role
-from apps import User, Role
+from apps import create_app, db
+from apps.models import User, Role
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 
 
-# apps = create_app(os.getenv('FLASK_CONFIG') or 'default')
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 migrate = Migrate(app, db)
 app.config['DEBUG'] = True

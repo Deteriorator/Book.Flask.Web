@@ -1,6 +1,7 @@
 # PyCharm
 .idea/
 data.sqlite
+data-test.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
