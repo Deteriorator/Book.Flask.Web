@@ -2,33 +2,6 @@
 
 {% block title %}Flask{% endblock %}
 
-{#<script src="{{ url_for('static/js', filename='moment.min.2.3.1.js') }}"></script>#}
-{#<script src="{{ url_for('static/js', filename='utils.js') }}"></script>#}
-{#<script>#}
-{#    function flask_moment_render(elem) {#}
-{#        $(elem).text(eval('moment("' + $(elem).data('timestamp') + '").' + $(elem).data('format') + ';'));#}
-{#        $(elem).removeClass('flask-moment');#}
-{#    }#}
-{#    function flask_moment_render_all() {#}
-{#        $('.flask-moment').each(function() {#}
-{#            flask_moment_render(this);#}
-{#            if ($(this).data('refresh')) {#}
-{#                (function(elem, interval) { setInterval(function() { flask_moment_render(elem) }, interval); })(this, $(this).data('refresh'));#}
-{#            }#}
-{#        })#}
-{#    }#}
-{#    $(document).ready(function() {#}
-{#        flask_moment_render_all();#}
-{#    });#}
-{#</script>#}
-
-{#{% block scripts %}#}
-{#{{ super() }}#}
-{#{{ moment.include_moment() }}#}
-{#    <script src="{{ url_for('static/js', filename='moment.min.2.3.1.js') }}"></script>#}
-{#    <script src="{{ url_for('static/js', filename='utils.js') }}"></script>#}
-{#{% endblock %}#}
-
 {% block head %}
     {{ super() }}
     {# 添加网站图标 #}
@@ -92,5 +65,6 @@
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}
+    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
 {% endblock %}
 
