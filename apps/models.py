@@ -11,14 +11,20 @@
 -------------------------------------------------
 """
 from datetime import datetime
-
-from . import db
+import hashlib
+from . import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, AnonymousUserMixin
-from . import login_manager
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app, request
-import hashlib
+
+
+class Permission:
+    FOLLOW = 0x01
+    COMMENT = 0x02
+    WRITE_ARTICLES = 0x04
+    MODERATE_COMMENTS = 0x08
+    ADMINISTER = 0x80
 
 
 class Role(db.Model):
@@ -73,6 +79,7 @@ class User(UserMixin, db.Model):
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
     # 新添加的字段保存用户的真实姓名、所在地、自我介绍、注册日期和最后访问日期
     avatar_hash = db.Column(db.String(32))
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -85,7 +92,7 @@ class User(UserMixin, db.Model):
             self.avatar_hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
 
     def can(self, permissions):
-        return self.role is not None and (self.role.permissions & permissions)
+        return self.role is not None and (self.role.permissions & permissions) == permissions
 
     def is_administrator(self):
         return self.can(Permission.ADMINISTER)
@@ -174,17 +181,12 @@ class User(UserMixin, db.Model):
         )
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
-
-class Permission:
-    FOLLOW = 0x01
-    COMMENT = 0x02
-    WAIT_ARTICLES = 0x04
-    MODERATE_COMMENTS = 0x08
-    ADMINISTER = 0x80
+class Post(db.Model):
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
 class AnonymousUser(AnonymousUserMixin):
@@ -196,3 +198,8 @@ class AnonymousUser(AnonymousUserMixin):
 
 
 login_manager.anonymous_user = AnonymousUser
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
