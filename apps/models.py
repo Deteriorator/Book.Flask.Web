@@ -44,12 +44,12 @@ class Role(db.Model):
             'User': (
                 Permission.FOLLOW |
                 Permission.COMMENT |
-                Permission.WAIT_ARTICLES, True
+                Permission.WRITE_ARTICLES, True
             ),
             'Moderator': (
                 Permission.FOLLOW |
                 Permission.COMMENT |
-                Permission.WAIT_ARTICLES |
+                Permission.WRITE_ARTICLES |
                 Permission.MODERATE_COMMENTS, False
             ),
             'Administrator': (0xff, False)
