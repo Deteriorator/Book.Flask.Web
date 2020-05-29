@@ -22,6 +22,7 @@ class Config:
     FLASK_MAIL_SENDER = os.environ.get('MAIL_USERNAME')
     FLASK_ADMIN = os.environ.get('FLASK_ADMIN')
     FLASK_POSTS_PER_PAGE = 20
+    FLASK_FOLLOWERS_PER_PAGE = 50
 
     @staticmethod
     def init_app(app):
