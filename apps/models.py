@@ -257,6 +257,12 @@ class User(UserMixin, db.Model):
             follower_id=user.id
         ).first() is not None
 
+    @property
+    def followed_posts(self):
+        return Post.query.join(Follow, Follow.followed_id == Post.author_id).filter(
+            Follow.follower_id == self.id
+        )
+
 
 class Post(db.Model):
     __tablename__ = 'posts'
