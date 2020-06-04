@@ -24,6 +24,8 @@ class Config:
     FLASK_POSTS_PER_PAGE = 20
     FLASK_FOLLOWERS_PER_PAGE = 50
     FLASK_COMMENTS_PER_PAGE = 30
+    SQLALCHEMY_RECORD_QUERIES = True
+    FLASK_SLOW_DB_QUERY_TIME = 0.5
 
     @staticmethod
     def init_app(app):
