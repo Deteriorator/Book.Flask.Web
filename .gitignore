@@ -3,6 +3,7 @@
 data.sqlite
 data-test.sqlite
 *.sqlite-journal
+tmp/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -24,4 +24,5 @@ html5lib==1.0b3
 itsdangerous==0.24
 python-editor==1.0.3
 six==1.4.1
-httpie-2.1.0
+httpie==2.1.0
+coverage==5.1
